@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
+  flutter_svg: ^0.19.1
+  expandable: ^4.1.4
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +21,16 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - lib/assets/fonts/
+    - lib/assets/images/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: lib/assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/Nunito-Regular.ttf
+          weight: 400
