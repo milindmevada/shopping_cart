@@ -1,16 +1,24 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:grocery_store_ux/src/models.dart';
+import 'package:grocery_store_ux/src/models/models.dart';
 import 'package:grocery_store_ux/src/style/assets.dart';
 import 'package:grocery_store_ux/src/style/colors.dart';
 import 'package:grocery_store_ux/src/style/text_themes.dart';
 
-class CategorySection extends StatelessWidget {
-  final String category;
-  final List<ItemModel> items;
+typedef ItemToggleCallback = Function(int itemIndex);
 
-  const CategorySection({Key key, this.category, this.items}) : super(key: key);
+class CategorySection extends StatelessWidget {
+  final CategoryModel categoryModel;
+  final VoidCallback onToggleCategory;
+  final ItemToggleCallback onToggleItem;
+
+  const CategorySection({
+    Key key,
+    this.categoryModel,
+    this.onToggleCategory,
+    this.onToggleItem,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +28,17 @@ class CategorySection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              category,
+              categoryModel.category,
               style: AppTextThemes.itemTitle.copyWith(
                 color: AppColors.shuttleGrey,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: Checkbox(value: false, onChanged: (_) => null),
+              child: Checkbox(
+                value: categoryModel.isSelected,
+                onChanged: (_) => onToggleCategory?.call(),
+              ),
             )
           ],
         ),
@@ -40,7 +51,7 @@ class CategorySection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ...List.generate(
-                items.length,
+                categoryModel.items.length,
                 (index) {
                   final controller = ExpandableController();
                   return Column(
@@ -48,16 +59,18 @@ class CategorySection extends StatelessWidget {
                       ExpandablePanel(
                         controller: controller,
                         expanded: ItemRow(
-                          item: items[index],
+                          item: categoryModel.items[index],
                           isExpanded: true,
                           onTap: () => controller.toggle(),
+                          onToggle: () => onToggleItem.call(index),
                         ),
                         collapsed: ItemRow(
-                          item: items[index],
+                          item: categoryModel.items[index],
                           onTap: () => controller.toggle(),
+                          onToggle: () => onToggleItem.call(index),
                         ),
                       ),
-                      if (index != items.length - 1) Separator()
+                      if (index != categoryModel.items.length - 1) Separator()
                     ],
                   );
                 },
@@ -74,9 +87,15 @@ class ItemRow extends StatelessWidget {
   final ItemModel item;
   final bool isExpanded;
   final VoidCallback onTap;
+  final VoidCallback onToggle;
 
-  const ItemRow({Key key, this.isExpanded = false, this.onTap, this.item})
-      : super(key: key);
+  const ItemRow({
+    Key key,
+    this.isExpanded = false,
+    this.onTap,
+    this.item,
+    this.onToggle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +144,7 @@ class ItemRow extends StatelessWidget {
                   SizedBox(width: 16),
                   Checkbox(
                     value: item.isSelected,
-                    onChanged: (_) => null,
+                    onChanged: (_) => onToggle?.call(),
                   )
                 ],
               ),

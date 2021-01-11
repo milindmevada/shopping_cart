@@ -1,33 +1,4 @@
-class CategoryModel {
-  final String category;
-  final List<ItemModel> items;
-
-  CategoryModel({this.category, this.items});
-}
-
-class ItemModel {
-  final String itemName;
-  final String qty;
-  final String qtyLabel;
-  final bool isSelected;
-  final CommentModel commentModel;
-
-  ItemModel({
-    this.itemName,
-    this.qty,
-    this.qtyLabel,
-    this.isSelected = false,
-    this.commentModel,
-  });
-}
-
-class CommentModel {
-  final String comment;
-  final String userName;
-  final String time;
-
-  CommentModel({this.comment, this.userName, this.time});
-}
+import 'package:grocery_store_ux/src/models/models.dart';
 
 class AppData {
   static List<CategoryModel> allItems = [
