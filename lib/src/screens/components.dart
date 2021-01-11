@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery_store_ux/src/models/models.dart';
 import 'package:grocery_store_ux/src/style/assets.dart';
 import 'package:grocery_store_ux/src/style/colors.dart';
+import 'package:grocery_store_ux/src/style/shadows.dart';
 import 'package:grocery_store_ux/src/style/text_themes.dart';
 
 typedef ItemToggleCallback = Function(int itemIndex);
@@ -36,6 +37,7 @@ class CategorySection extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 16),
               child: Checkbox(
+                activeColor: AppColors.pastelGreen,
                 value: categoryModel.isSelected,
                 onChanged: (_) => onToggleCategory?.call(),
               ),
@@ -143,6 +145,7 @@ class ItemRow extends StatelessWidget {
                   ),
                   SizedBox(width: 16),
                   Checkbox(
+                    activeColor: AppColors.pastelGreen,
                     value: item.isSelected,
                     onChanged: (_) => onToggle?.call(),
                   )
@@ -211,6 +214,71 @@ class Separator extends StatelessWidget {
     return Container(
       height: 1,
       color: AppColors.scaffoldBg,
+    );
+  }
+}
+
+class CategoryItem extends StatelessWidget {
+  final String asset;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const CategoryItem({
+    Key key,
+    this.asset,
+    this.label,
+    this.isSelected = false,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 200),
+      child: GestureDetector(
+        key: UniqueKey(),
+        onTap: onTap,
+        child: Container(
+          height: 94,
+          decoration: isSelected
+              ? BoxDecoration(
+                  color: AppColors.pastelGreen,
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: AppShadows.categoryCardShadow,
+                )
+              : BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SvgPicture.asset(
+                  asset,
+                  height: 36,
+                  width: 36,
+                  color: isSelected ? Colors.white : AppColors.cadetBlue,
+                ),
+                SizedBox(height: 6),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      label,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: AppTextThemes.categoryLabel.copyWith(
+                        color: isSelected ? Colors.white : AppColors.blueWood,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

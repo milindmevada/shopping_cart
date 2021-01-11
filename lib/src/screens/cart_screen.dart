@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grocery_store_ux/src/data.dart';
 import 'package:grocery_store_ux/src/screens/components.dart';
-import 'package:grocery_store_ux/src/style/assets.dart';
 import 'package:grocery_store_ux/src/style/colors.dart';
-import 'package:grocery_store_ux/src/style/shadows.dart';
 import 'package:grocery_store_ux/src/style/text_themes.dart';
 import 'package:grocery_store_ux/src/viewmodels/cart_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -134,75 +132,4 @@ class CategoryHeader extends StatelessWidget {
       ),
     );
   }
-}
-
-class CategoryItem extends StatelessWidget {
-  final String asset;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const CategoryItem({
-    Key key,
-    this.asset,
-    this.label,
-    this.isSelected = false,
-    this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 94,
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.pastelGreen : Colors.transparent,
-          borderRadius: BorderRadius.circular(6),
-          boxShadow: isSelected ? AppShadows.categoryCardShadow : [],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              SvgPicture.asset(
-                asset,
-                height: 36,
-                width: 36,
-                color: isSelected ? Colors.white : AppColors.cadetBlue,
-              ),
-              SizedBox(height: 6),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    label,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    style: AppTextThemes.categoryLabel.copyWith(
-                      color: isSelected ? Colors.white : AppColors.blueWood,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CategoryItemData {
-  final String asset;
-  final String name;
-
-  const CategoryItemData(this.asset, this.name);
-
-  static const all = [
-    CategoryItemData(AppAssets.icGrocery, 'Grocery'),
-    CategoryItemData(AppAssets.icIron, 'Ironing'),
-    CategoryItemData(AppAssets.icDryCleaning, 'Dry Cleaning'),
-    CategoryItemData(AppAssets.icMilk, 'Milk'),
-    CategoryItemData(AppAssets.icTodo, 'Todo'),
-  ];
 }

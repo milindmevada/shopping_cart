@@ -1,4 +1,5 @@
 import 'package:grocery_store_ux/src/models/models.dart';
+import 'package:grocery_store_ux/src/style/assets.dart';
 
 class AppData {
   static List<CategoryModel> allItems = [
@@ -60,5 +61,20 @@ class AppData {
         ),
       ],
     ),
+  ];
+}
+
+class CategoryItemData {
+  final String asset;
+  final String name;
+
+  const CategoryItemData(this.asset, this.name);
+
+  static const all = [
+    CategoryItemData(AppAssets.icGrocery, 'Grocery'),
+    CategoryItemData(AppAssets.icIron, 'Ironing'),
+    CategoryItemData(AppAssets.icDryCleaning, 'Dry Cleaning'),
+    CategoryItemData(AppAssets.icMilk, 'Milk'),
+    CategoryItemData(AppAssets.icTodo, 'Todo'),
   ];
 }
