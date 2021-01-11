@@ -12,10 +12,32 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
+  flutter_svg: ^0.19.1
+  expandable: ^4.1.4
+  mobx: ^1.2.1+4
+  flutter_mobx: ^1.1.0+2
+  provider: ^4.3.2+3
+  freezed: ^0.12.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mobx_codegen: ^1.1.2
+  build_runner: ^1.10.12
+  freezed_annotation: ^0.12.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - lib/assets/fonts/
+    - lib/assets/images/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: lib/assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/Nunito-Regular.ttf
+          weight: 400
